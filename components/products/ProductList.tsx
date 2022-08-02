@@ -15,6 +15,7 @@ export const ProductList: FC<Props> = ({ products }) => {
                     (
                         <ProductCard
                             product={product}
+                            key={product.slug}
                         />
                     )
                 )

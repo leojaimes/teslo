@@ -4,6 +4,7 @@ export type ITypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
 
 
 export interface IProduct {
+    _id?: string
     description: string
     images: string[]
     inStock: number
