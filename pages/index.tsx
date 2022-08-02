@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import { ShopLayout } from '../components/layouts/ShopLayout';
 import { ProductList } from '../components/products';
 import { initialData } from '../database/products';
-import { getImage } from '../utils/get-image';
+
 
 
 
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           initialData.products
         }
 
-      ></ProductList>
+      />
     </ShopLayout>
   )
 }
