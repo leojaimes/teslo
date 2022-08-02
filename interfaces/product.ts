@@ -1,19 +1,18 @@
 
-export type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
-export type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
+export type ISizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+export type ITypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
 
 
-export interface Product {
+export interface IProduct {
     description: string
     images: string[]
     inStock: number
     price: number
-    sizes: string[]
+    sizes: ISizes[]
     slug: string
-    type: string
+    type: ITypes
     tags: string[]
     title: string
-    gender: 'men'|'women'|'kid'|'unisex'
+    gender: 'men' | 'women' | 'kid' | 'unisex'
 }
 
- 

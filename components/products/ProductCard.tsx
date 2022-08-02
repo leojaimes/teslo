@@ -1,10 +1,10 @@
 import { Card, CardActionArea, CardMedia, Grid } from '@mui/material'
 import React, { FC } from 'react'
-import { Product } from '../../interfaces'
+import { IProduct } from '../../interfaces'
 import { getImage } from '../../utils/get-image'
 
 interface Props {
-    product: Product
+    product: IProduct
 }
 export const ProductCard: FC<Props> = ({ product }) => {
     return (
