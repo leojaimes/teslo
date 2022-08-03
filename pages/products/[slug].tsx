@@ -1,9 +1,9 @@
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import React from 'react'
 import { ShopLayout } from '../../components/layouts/ShopLayout';
+import { ProductSlideShow } from '../../components/products';
 import { initialData } from '../../database/products';
-import { Slide } from 'react-slideshow-image';
-import { getImage } from '../../utils/get-image';
+
 const product = initialData.products[0]
 
 const ProductPage = () => {
@@ -16,16 +16,8 @@ const ProductPage = () => {
             >
 
                 <Grid item xs={12} sm={7}>
-                    <Slide>
-                        {product.images.map((image, index) => (
-                            <div className="each-slide" key={index}>
-                                <div style={{ 'backgroundImage': `url(${getImage(image)})` }}>
 
-                                </div>
-                            </div>
-                        ))}
-                    </Slide>
-
+                    <ProductSlideShow images={product.images} />
 
 
                 </Grid>
