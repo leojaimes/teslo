@@ -1,6 +1,6 @@
 
-export type ISizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
-export type ITypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
+export type ISize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+export type IType = 'shirts' | 'pants' | 'hoodies' | 'hats';
 
 
 export interface IProduct {
@@ -9,9 +9,9 @@ export interface IProduct {
     images: string[]
     inStock: number
     price: number
-    sizes: ISizes[]
+    sizes: ISize[]
     slug: string
-    type: ITypes
+    type: IType
     tags: string[]
     title: string
     gender: 'men' | 'women' | 'kid' | 'unisex'
