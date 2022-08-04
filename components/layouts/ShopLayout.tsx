@@ -29,7 +29,7 @@ export const ShopLayout: FC<Props> = ({ children, title, pageDescription, imageF
                         <meta name="og:image" content={imageFullUrl} />
                     )
                 }
-
+    
             </Head>
 
             <nav>
