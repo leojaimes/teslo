@@ -3,7 +3,7 @@ import { FC } from "react"
 import { ISize } from '../../interfaces/product';
 
 interface Props {
-    selectedSize: ISize
+    selectedSize?: ISize
     sizes: ISize[]
 }
 
@@ -17,8 +17,10 @@ export const SizeSelector: FC<Props> = ({ selectedSize, sizes }) => {
                     <Button
                         key={size}
                         size='small'
+                        color={selectedSize == size ? 'primary' : 'info'}
+
                     >
-                        {size}
+                        {size}  
                     </Button>
 
                 ))

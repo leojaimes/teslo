@@ -62,8 +62,8 @@ const ProductPage = () => {
                             </Typography>
                             <ItemCounter />
                             <SizeSelector
-                                sizes={['L', 'XL', 'XXXL']}
-                                selectedSize='L'
+                                sizes={product.sizes}
+                                selectedSize={product.sizes[0]}
                             />
 
                         </Box>
