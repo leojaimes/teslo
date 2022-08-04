@@ -21,7 +21,7 @@ const CartPage = () => {
                item
                xs={12} sm={7}
             >
-               <CartList />
+               <CartList editable />
             </Grid>
 
             <Grid

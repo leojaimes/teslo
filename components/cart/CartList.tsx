@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { FC } from 'react'
 import NextLink from 'next/link'
 
 import { Typography, Grid, Link, CardActionArea, CardMedia, Box, Button } from '@mui/material';
@@ -14,7 +14,12 @@ const productsInCart = [
     initialData.products[1],
     initialData.products[2],
 ]
-export const CartList = () => {
+
+
+interface Props {
+    editable?: boolean
+}
+export const CartList: FC<Props> = ({ editable = false }) => {
     return (
         <>
             {
@@ -73,8 +78,15 @@ export const CartList = () => {
                                     Size: <strong>M</strong>
                                 </Typography>
                                 {/**Condition */}
+                                {
+                                    editable ?
+                                        <ItemCounter />
+                                        :
+                                        <Typography variant='h4'>
+                                            3
+                                        </Typography>
+                                }
 
-                                <ItemCounter />
                             </Box>
                         </Grid>
                         <Grid
@@ -91,12 +103,17 @@ export const CartList = () => {
                             </Typography>
                             {/** editable*/}
 
-                            <Button
-                                variant='text'
-                                color='secondary'
-                            >
-                                Remove
-                            </Button>
+                            {
+                                editable &&
+
+                                <Button
+                                    variant='text'
+                                    color='secondary'
+                                >
+                                    Remove
+                                </Button>
+                            }
+
                         </Grid>
 
 

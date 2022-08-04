@@ -36,7 +36,7 @@ export const OrderSummary = () => {
             >
                 <Typography
                 >
-                    Num. Products
+                    SubTotal
                 </Typography>
 
             </Grid>
@@ -48,12 +48,62 @@ export const OrderSummary = () => {
             >
                 <Typography
                 >
-                    3
+                    {`$${100}`}
                 </Typography>
 
             </Grid>
 
-            
+
+            <Grid
+                item
+                xs={6}
+            >
+                <Typography
+                >
+                    Taxes {`15%`}
+                </Typography>
+
+            </Grid>
+            <Grid
+                item
+                xs={6}
+                display='flex'
+                justifyContent='end'
+            >
+                <Typography
+                >
+                    {`$${15}`}
+                </Typography>
+
+            </Grid>
+
+
+            <Grid
+                item
+                xs={6}
+            >
+                <Typography
+                    variant='subtitle1'
+                >
+                    Total
+                </Typography>
+
+            </Grid>
+            <Grid
+                item
+                xs={6}
+                display='flex'
+                justifyContent='end'
+            >
+                <Typography
+                    variant='subtitle1'
+                >
+                    {`$${115}`}
+                </Typography>
+
+            </Grid>
+
+
         </Grid>
     )
 }
