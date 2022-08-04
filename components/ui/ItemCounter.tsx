@@ -1,4 +1,4 @@
-import { AccountCircleOutlined, RemoveCircleOutlineOutlined } from "@mui/icons-material"
+import { AccountCircleOutlined, AddCircleOutlineOutlined, RemoveCircleOutlineOutlined } from "@mui/icons-material"
 import { Box, IconButton, Typography } from "@mui/material"
 import { textAlign } from "@mui/system"
 import { FC } from "react"
@@ -26,10 +26,10 @@ export const ItemCounter: FC<Props> = () => {
                     textAlign: 'center',
 
                 }}
-            />
+            > 1 </Typography>
 
             <IconButton>
-                <AccountCircleOutlined />
+                <AddCircleOutlineOutlined />
             </IconButton>
 
         </Box>
