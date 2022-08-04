@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from "@mui/material"
-import { CartList } from "../../components/cart"
+import { CartList, OrderSummary } from "../../components/cart"
 import { ShopLayout } from "../../components/layouts"
 
 
@@ -43,7 +43,7 @@ const CartPage = () => {
                      }}
                   />
                   {/**Order Summary */}
-
+                  <OrderSummary />
                   <Box
                      sx={{
                         mt: 3

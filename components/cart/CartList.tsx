@@ -2,7 +2,7 @@
 import React from 'react'
 import NextLink from 'next/link'
 
-import { Typography, Grid, Link, CardActionArea, CardMedia, Box } from '@mui/material';
+import { Typography, Grid, Link, CardActionArea, CardMedia, Box, Button } from '@mui/material';
 
 import { initialData } from '../../database/products';
 import { getImage } from '../../utils/get-image';
@@ -80,8 +80,23 @@ export const CartList = () => {
                         <Grid
                             item
                             xs={2}
+                            display='flex'
+                            alignItems='center'
+                            flexDirection='column'
                         >
+                            <Typography
+                                variant='subtitle1'
+                            >
+                                ${product.price}
+                            </Typography>
+                            {/** editable*/}
 
+                            <Button
+                                variant='text'
+                                color='secondary'
+                            >
+                                Remove
+                            </Button>
                         </Grid>
 
 
