@@ -4,7 +4,7 @@ import { Box, Button, Grid, TextField, Typography, Link, Chip } from '@mui/mater
 
 import { AuthLayout } from '../../components/layouts/';
 
-const LoginPage = () => {
+const RegisterPage = () => {
     return (
         <AuthLayout title={'Login - Teslo'}  >
             <Box sx={{ width: 350, paddin: '10px 20px', }}>
@@ -16,8 +16,21 @@ const LoginPage = () => {
                         item
                         xs={12}
                     >
-                        <Typography variant='h1' component='h1'>Sign In</Typography>
+                        <Typography variant='h1' component='h1'>Sign Up</Typography>
                     </Grid>
+
+
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <TextField
+                            label='Name'
+                            variant='filled'
+                            fullWidth
+                        />
+                    </Grid>
+
 
                     <Grid
                         item
@@ -46,20 +59,20 @@ const LoginPage = () => {
                         item
                         xs={12}
                     >
-                        <Button color='secondary' className='circular-btn' size='large' fullWidth>Sign In</Button>
+                        <Button color='secondary' className='circular-btn' size='large' fullWidth>Sign Up</Button>
                     </Grid>
-
                     <Grid
                         item
                         xs={12}
                         display='flex'
                         justifyContent='end'
                     >
-                        <NextLink href={`/auth/register`} passHref>
-                            <Link underline='always'> Dont you have an account? </Link>
+                        <NextLink href={`/auth/login`} passHref>
+                            <Link underline='always'> You Already have an account? </Link>
                             {/** <Chip label='Sign Up' sx={{ width: '100%', height: 40 }} /> */}
                         </NextLink>
                     </Grid>
+
 
 
 
@@ -70,4 +83,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
