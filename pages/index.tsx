@@ -2,13 +2,17 @@ import { Card, CardActionArea, CardActions, CardMedia, Grid, Typography } from '
 import type { NextPage } from 'next'
 import { ShopLayout } from '../components/layouts/ShopLayout';
 import { ProductList } from '../components/products';
-import { initialData } from '../database/products';
+import { FullScreenLoading } from '../components/ui';
+import { useProducts } from '../hooks';
+
+
+const HomePage: NextPage = () => {
+
+
+  const { products, isLoading } = useProducts('products')
 
 
 
-
-initialData
-const Home: NextPage = () => {
   return (
     <ShopLayout title={'Home - Teslo Shop'} pageDescription={'Found the best products from Teslo Here!!'}     >
       <Typography
@@ -28,14 +32,15 @@ const Home: NextPage = () => {
         All Products
       </Typography>
 
-      <ProductList
-        products={
-          initialData.products
-        }
 
-      />
+      {
+        isLoading
+          ? <FullScreenLoading />
+          : <ProductList products={products} />
+      }
+
     </ShopLayout>
   )
 }
 
-export default Home
+export default HomePage
