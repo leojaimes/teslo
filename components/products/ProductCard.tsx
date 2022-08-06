@@ -16,6 +16,10 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
 
     const [isHovered, setIsHovered] = useState(false)
+
+    const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+
     const productMemo = useMemo(() => {
 
         return isHovered ? getImage(product.images[0]) : getImage(product.images[1])
@@ -49,6 +53,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
                                 component='img'
                                 image={productMemo}
                                 alt={product.title}
+                                onLoad={() => { setIsImageLoaded(true) }}
                             >
                             </CardMedia>
                         </CardActionArea>
@@ -58,6 +63,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
             <Box
                 sx={{
                     marginTop: 1,
+                    display: isImageLoaded ? 'block' : 'none'
                 }}
                 className='fadeIn'
             >

@@ -34,7 +34,7 @@ const HomePage: NextPage = () => {
 
 
       {
-        isLoading
+        isLoading && products
           ? <FullScreenLoading />
           : <ProductList products={products} />
       }
