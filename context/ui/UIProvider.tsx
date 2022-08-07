@@ -1,5 +1,5 @@
 import { FC, useReducer } from 'react'
-import { UIContext, UIReducer } from './'
+import { UIContext, uiReducer } from './'
 
 export interface UIState {
     isMenuOpen: boolean
@@ -19,12 +19,19 @@ interface Props {
 
 export const UIProvider: FC<Props> = ({ children }) => {
 
-    const [state, dispatch] = useReducer(UIReducer, UI_INITIAL_STATE)
+    const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
+
+    const toogleSideMenu = () => {
+        dispatch({
+            type: '[UI] - ToggleMenu'
+        })
+    }
 
 
     return (
         <UIContext.Provider value={{
-            ...state
+            ...state,
+            toogleSideMenu
         }}>
             {children}
         </UIContext.Provider>

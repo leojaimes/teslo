@@ -3,22 +3,23 @@ import { UIState } from './';
 
 
 type UIActionType =
- | { type: '[UI] - ActionName' }
+    | { type: '[UI] - ToggleMenu' }
 
 
 
-export const UIReducer = (state: UIState, action: UIActionType): UIState => {
+export const uiReducer = (state: UIState, action: UIActionType): UIState => {
 
-   switch (action.type) {
-      case '[UI] - ActionName':
+    switch (action.type) {
+        case '[UI] - ToggleMenu':
 
-         return {
-            ...state,
+            return {
+                ...state,
+                isMenuOpen: !state.isMenuOpen
             }
 
 
 
-         default: return state
+        default: return state
     }
 
 }
