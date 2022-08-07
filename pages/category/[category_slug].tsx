@@ -9,10 +9,8 @@ import { useProducts } from '../../hooks';
 
 const CategoriesPage = () => {
     const route = useRouter()
-    console.log(route)
-    const { products, isLoading } = useProducts(`products?gender=${route.query.slug}`)
-
-
+    
+    const { products, isLoading } = useProducts(`products?gender=${route.query.category_slug}`)
 
     return (
         <ShopLayout title={'Home - Teslo Shop'} pageDescription={'Found the best products from Teslo Here!!'}     >
