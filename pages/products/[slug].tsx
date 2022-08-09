@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 
 
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
@@ -17,6 +17,8 @@ import { GetStaticProps } from 'next'
 import { GetStaticPaths } from 'next'
 import { ISize } from '../../interfaces/product';
 import { fontSize } from '@mui/system';
+import { CartContext } from '../../context/cart/CartContext';
+
 
 //const product = initialData.products[0]
 
@@ -27,6 +29,11 @@ interface Props {
 }
 
 const ProductPage: NextPage<Props> = ({ product }) => {
+
+
+    const router = useRouter()
+
+    const { addProductToCart } = useContext(CartContext)
 
     const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
 
@@ -47,6 +54,40 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             size: size,
         })
     }
+
+    const onClickMinus = () => {
+
+        if (tempCartProduct.quantity - 1 < 1) {
+            return
+        }
+        setTempCartProduct({
+            ...tempCartProduct,
+            quantity: tempCartProduct.quantity - 1,
+        })
+
+    }
+
+    const onClickPlus = () => {
+        if (tempCartProduct.quantity + 1 > product.inStock) {
+            return
+        }
+        setTempCartProduct({
+            ...tempCartProduct,
+            quantity: tempCartProduct.quantity + 1,
+        })
+    }
+
+    const onClickAddToCart = () => {
+        if (!tempCartProduct.size) {
+            return
+        }
+
+        addProductToCart({
+          ...tempCartProduct
+        })
+        router.push(`/cart`)
+    }
+
 
     return (
 
@@ -106,9 +147,14 @@ const ProductPage: NextPage<Props> = ({ product }) => {
                                         variant='subtitle2'
                                         component='h2'
                                     >
-                                        Quantity ${product.price}
+                                        Quantity
                                     </Typography>
-                                    <ItemCounter />
+                                    <ItemCounter
+                                        value={tempCartProduct.quantity}
+                                        onClickMinus={onClickMinus}
+                                        onClickPlus={onClickPlus}
+
+                                    />
                                     <SizeSelector
                                         sizes={product.sizes}
                                         selectedSize={tempCartProduct.size}
@@ -126,6 +172,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
                                             <Button
                                                 color='secondary'
                                                 className='circular-btn'
+                                                onClick={onClickAddToCart}
 
                                             >
                                                 {

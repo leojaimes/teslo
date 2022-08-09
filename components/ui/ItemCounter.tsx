@@ -6,9 +6,11 @@ import { FC } from "react"
 
 
 interface Props {
-
+    value: number
+    onClickMinus: () => void
+    onClickPlus: () => void
 }
-export const ItemCounter: FC<Props> = () => {
+export const ItemCounter: FC<Props> = ({ value = 1, onClickMinus, onClickPlus }) => {
     return (
         <Box
             display={'flex'}
@@ -16,7 +18,9 @@ export const ItemCounter: FC<Props> = () => {
 
 
         >
-            <IconButton>
+            <IconButton
+                onClick={onClickMinus}
+            >
                 <RemoveCircleOutlineOutlined />
             </IconButton>
 
@@ -26,9 +30,11 @@ export const ItemCounter: FC<Props> = () => {
                     textAlign: 'center',
 
                 }}
-            > 1 </Typography>
+            > {value} </Typography>
 
-            <IconButton>
+            <IconButton
+                onClick={onClickPlus}
+            >
                 <AddCircleOutlineOutlined />
             </IconButton>
 
