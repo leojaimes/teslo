@@ -1,32 +1,39 @@
 import { FC, useReducer } from 'react'
-import { CartContext, CartReducer  } from './'
+import { ICartProduct } from '../../interfaces'
+import { CartContext, cartReducer } from './'
 
 export interface CartState {
-    prop1: boolean
+    cart: ICartProduct[]
 }
 
 
-const Cart_INITIAL_STATE :  CartState  = {
-    prop1: false,
+const Cart_INITIAL_STATE: CartState = {
+    cart: [],
 
 }
 
 interface Props {
-   children : JSX.Element | JSX.Element[] | undefined
+    children: JSX.Element | JSX.Element[] | undefined
 }
 
- 
+
 
 export const CartProvider: FC<Props> = ({ children }) => {
 
-  const [state, dispatch] = useReducer(CartReducer, Cart_INITIAL_STATE)
+    const [state, dispatch] = useReducer(cartReducer, Cart_INITIAL_STATE)
+
+    const addProductToCart = (product: ICartProduct) => {
+        dispatch({ type: '[Cart] - Update products in cart', payload: [] })
+    }
+
+    return (
+        <CartContext.Provider value={{
+            ...state,
 
 
-  return (
-     <CartContext.Provider  value={{
-        ...state
-     }}>
-        { children }
-     </CartContext.Provider>
-  )
+            addProductToCart
+        }}>
+            {children}
+        </CartContext.Provider>
+    )
 }
