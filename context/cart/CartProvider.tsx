@@ -23,7 +23,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, Cart_INITIAL_STATE)
 
     const addProductToCart = (product: ICartProduct) => {
-        dispatch({ type: '[Cart] - Update products in cart', payload: [] })
+        dispatch({ type: '[Cart] - Update products in cart', payload: product })
     }
 
     return (
