@@ -222,7 +222,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
         return {
             redirect: {
                 destination: '/',
-                permanent: false
+                permanent: false // it could be that tomorrow the product exists
             }
         }
     }
