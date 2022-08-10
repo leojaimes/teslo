@@ -40,7 +40,9 @@ export const CartProvider: FC<Props> = ({ children }) => {
         dispatch({ type: '[Cart] - Update products in cart', payload: product })
         Cookie.set('cart', JSON.stringify(state.cart));
     }
-
+    const removeCartProduct = ( product: ICartProduct ) => {
+        dispatch({ type: 'Cart] - Remove product in cart', payload: product });
+    }
 
 
 
@@ -49,7 +51,8 @@ export const CartProvider: FC<Props> = ({ children }) => {
             ...state,
 
 
-            addProductToCart
+            addProductToCart,
+            removeCartProduct
         }}>
             {children}
         </CartContext.Provider>

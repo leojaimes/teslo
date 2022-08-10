@@ -1,5 +1,5 @@
 
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import NextLink from 'next/link'
 
 import { Typography, Grid, Link, CardActionArea, CardMedia, Box, Button } from '@mui/material';
@@ -7,6 +7,7 @@ import { Typography, Grid, Link, CardActionArea, CardMedia, Box, Button } from '
 import { initialData } from '../../database/products';
 import { getImage } from '../../utils/get-image';
 import { ItemCounter } from '../ui';
+import { CartContext } from '../../context/cart/CartContext';
 
 
 const productsInCart = [
@@ -20,10 +21,11 @@ interface Props {
     editable?: boolean
 }
 export const CartList: FC<Props> = ({ editable = false }) => {
+    const { cart, addProductToCart } = useContext(CartContext)
     return (
         <>
             {
-                productsInCart.map(product => (
+                cart.map(product => (
                     <Grid
                         key={product.slug}
                         container
@@ -44,7 +46,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 <Link>
                                     <CardActionArea>
                                         <CardMedia
-                                            image={getImage(product.images[0])}
+                                            image={getImage(product.image)}
                                             component='img'
                                             sx={{
                                                 borderRadius: '5px'
@@ -80,7 +82,16 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 {/**Condition */}
                                 {
                                     editable ?
-                                        <ItemCounter />
+                                        <ItemCounter value={1}
+                                            onClickMinus={function (): void {
+
+                                            }}
+
+                                            onClickPlus={function (): void {
+
+                                            }}
+
+                                        />
                                         :
                                         <Typography variant='h4'>
                                             3
