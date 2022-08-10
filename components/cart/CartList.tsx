@@ -8,6 +8,7 @@ import { initialData } from '../../database/products';
 import { getImage } from '../../utils/get-image';
 import { ItemCounter } from '../ui';
 import { CartContext } from '../../context/cart/CartContext';
+import { ICartProduct } from '../../interfaces/cart';
 
 
 const productsInCart = [
@@ -21,7 +22,15 @@ interface Props {
     editable?: boolean
 }
 export const CartList: FC<Props> = ({ editable = false }) => {
-    const { cart, addProductToCart } = useContext(CartContext)
+    const { cart, addProductToCart, removeCartProduct } = useContext(CartContext)
+
+
+
+    const onClickRemoveCartProduct = (product: ICartProduct)=> {
+        removeCartProduct( product )
+    }
+
+
     return (
         <>
             {
@@ -77,12 +86,12 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 <Typography
                                     variant='body1'
                                 >
-                                    Size: <strong>M</strong>
+                                    Size: <strong>{ product.size }</strong>
                                 </Typography>
                                 {/**Condition */}
                                 {
                                     editable ?
-                                        <ItemCounter value={1}
+                                        <ItemCounter value={ product.quantity  }
                                             onClickMinus={function (): void {
 
                                             }}
@@ -120,6 +129,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 <Button
                                     variant='text'
                                     color='secondary'
+                                    onClick={()=> onClickRemoveCartProduct(product)}
                                 >
                                     Remove
                                 </Button>

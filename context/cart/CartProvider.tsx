@@ -24,7 +24,7 @@ export const CartProvider: FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, Cart_INITIAL_STATE)
 
 
- 
+
     useEffect(() => {
         try {
             const cookieProducts = Cookie.get('cart') ? JSON.parse(Cookie.get('cart')!) : []
@@ -40,8 +40,9 @@ export const CartProvider: FC<Props> = ({ children }) => {
         dispatch({ type: '[Cart] - Update products in cart', payload: product })
         Cookie.set('cart', JSON.stringify(state.cart));
     }
-    const removeCartProduct = ( product: ICartProduct ) => {
+    const removeCartProduct = (product: ICartProduct) => {
         dispatch({ type: 'Cart] - Remove product in cart', payload: product });
+        Cookie.set('cart', JSON.stringify(state.cart));
     }
 
 
