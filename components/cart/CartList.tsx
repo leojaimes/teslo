@@ -22,14 +22,21 @@ interface Props {
     editable?: boolean
 }
 export const CartList: FC<Props> = ({ editable = false }) => {
-    const { cart, addProductToCart, removeCartProduct } = useContext(CartContext)
+    const { cart, removeCartProduct, updateCartProduct } = useContext(CartContext)
 
 
 
-    const onClickRemoveCartProduct = (product: ICartProduct)=> {
-        removeCartProduct( product )
+    const onClickRemoveCartProduct = (product: ICartProduct) => {
+        console.log('onClickRemoveCartProduct')
+        removeCartProduct(product)
     }
-
+    const onClickUpdateCartProduct = (product: ICartProduct, sum: number) => {
+        console.log('onClickUpdateCartProduct')
+        updateCartProduct({
+            ...product,
+            quantity: product.quantity + sum
+        })
+    }
 
     return (
         <>
@@ -86,18 +93,20 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 <Typography
                                     variant='body1'
                                 >
-                                    Size: <strong>{ product.size }</strong>
+                                    Size: <strong>{product.size}</strong>
                                 </Typography>
                                 {/**Condition */}
                                 {
                                     editable ?
-                                        <ItemCounter value={ product.quantity  }
-                                            onClickMinus={function (): void {
+                                        <ItemCounter
+                                            value={product.quantity}
 
+                                            onClickMinus={() => {
+                                                onClickUpdateCartProduct(product, -1)
                                             }}
 
-                                            onClickPlus={function (): void {
-
+                                            onClickPlus={() => {
+                                                onClickUpdateCartProduct(product, +1)
                                             }}
 
                                         />
@@ -129,7 +138,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                 <Button
                                     variant='text'
                                     color='secondary'
-                                    onClick={()=> onClickRemoveCartProduct(product)}
+                                    onClick={() => onClickRemoveCartProduct(product)}
                                 >
                                     Remove
                                 </Button>
