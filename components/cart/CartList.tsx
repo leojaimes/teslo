@@ -11,12 +11,6 @@ import { CartContext } from '../../context/cart/CartContext';
 import { ICartProduct } from '../../interfaces/cart';
 
 
-const productsInCart = [
-    initialData.products[0],
-    initialData.products[1],
-    initialData.products[2],
-]
-
 
 interface Props {
     editable?: boolean
