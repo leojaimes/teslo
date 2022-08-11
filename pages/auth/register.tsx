@@ -30,7 +30,7 @@ const RegisterPage = () => {
         try {
             const { data } = await tesloApi.post(`/user/register`, { name, email, password })
             const { token, user } = data
-            console.log( data )
+            console.log(data)
         } catch (error) {
             console.log(error)
             setShowError(true)
@@ -45,7 +45,7 @@ const RegisterPage = () => {
 
     }
     return (
-        <form onSubmit={handleSubmit(onRegister)}>
+        <form onSubmit={handleSubmit(onRegister)} noValidate>
             <AuthLayout title={'Register - Teslo'}  >
                 <Box sx={{ width: 350, paddin: '10px 20px', }}>
                     <Grid
@@ -75,7 +75,7 @@ const RegisterPage = () => {
                                 ...register('name',
                                     {
                                         required: 'This field is required',
-
+                                        minLength: { value: 2, message: 'This field must be at least 2 characters' }
                                     }
 
 
@@ -93,6 +93,7 @@ const RegisterPage = () => {
                             xs={12}
                         >
                             <TextField
+                                type='email'
                                 label='Email'
                                 variant='filled'
                                 fullWidth
