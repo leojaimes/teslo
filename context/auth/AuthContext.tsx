@@ -1,7 +1,9 @@
 import { createContext } from 'react';
+import { IUser } from '../../interfaces';
 
 export interface AuthContextProps {
-     prop1: boolean
+    isLoggedIn: boolean;
+    user?: IUser;
 
 }
 
