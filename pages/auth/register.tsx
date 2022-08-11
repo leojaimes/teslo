@@ -3,8 +3,21 @@ import NextLink from 'next/link'
 import { Box, Button, Grid, TextField, Typography, Link, Chip } from '@mui/material';
 
 import { AuthLayout } from '../../components/layouts/';
+import { useForm } from 'react-hook-form';
+
+
+type FormData = {
+    name    : string;
+    email   : string;
+    password: string;
+};
+
+
 
 const RegisterPage = () => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    
     return (
         <AuthLayout title={'Login - Teslo'}  >
             <Box sx={{ width: 350, paddin: '10px 20px', }}>
