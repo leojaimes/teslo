@@ -4,6 +4,9 @@ import { Box, Button, Grid, TextField, Typography, Link, Chip } from '@mui/mater
 
 import { AuthLayout } from '../../components/layouts/';
 import { useForm } from 'react-hook-form';
+import { validations } from '../../utils';
+import tesloApi from '../../api/tesloApi';
+
 
 
 
@@ -16,13 +19,22 @@ type FormData = {
 const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
+    console.log({ errors })
 
-    const onLoginUser = (data: FormData) => {
-        console.log(data)
+    const onLoginUser = async ({ email, password }: FormData) => {
+        try {
+            const { data } = await tesloApi.post(`/auth/login`, { email, password })
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
+
+
+
     }
     return (
         <AuthLayout title={'Login - Teslo'}  >
-            <form onSubmit={handleSubmit(onLoginUser)}>
+            <form onSubmit={handleSubmit(onLoginUser)} noValidate>
                 <Box sx={{ width: 350, paddin: '10px 20px', }}>
                     <Grid
                         container
@@ -44,7 +56,16 @@ const LoginPage = () => {
                                 variant='filled'
                                 type='email'
                                 fullWidth
-                                {...register('email')}
+                                {...register(
+                                    'email',
+                                    {
+                                        required: 'This field is required',
+                                        validate: validations.isEmail
+                                    }
+                                )
+                                }
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
                             />
                         </Grid>
 
@@ -57,7 +78,21 @@ const LoginPage = () => {
                                 variant='filled'
                                 type='password'
                                 fullWidth
-                                {...register('password')}
+                                {...register('password',
+
+                                    {
+                                        required: 'This field is required',
+                                        minLength: { value: 6, message: 'This field should have min 6 characters' },
+
+
+
+                                    }
+
+
+
+                                )}
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
                             />
                         </Grid>
 
