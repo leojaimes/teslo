@@ -10,6 +10,8 @@ export interface CartState {
     subTotal: number
     tax: number
     total: number
+    shippingAddress?: ShippingAddress
+    
 }
 
 
@@ -33,6 +35,8 @@ const CART_INITIAL_STATE: CartState = {
     tax: 0,
     total: 0,
     isLoaded: false,
+    shippingAddress: undefined
+
 
 }
 

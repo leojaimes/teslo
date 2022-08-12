@@ -9,15 +9,16 @@ type CartActionType =
     | { type: '[Cart] - Remove product in cart', payload: ICartProduct }
     | { type: '[Cart] - Update Product In Cart', payload: ICartProduct }
     | { type: '[Cart] - Update Address', payload: ShippingAddress }
-    | { 
-       type: '[Cart] - Update order summary', 
-       payload: {
-          numberOfItems: number;
-          subTotal: number;
-          tax: number;
-          total: number;
-       }
+    | {
+        type: '[Cart] - Update order summary',
+        payload: {
+            numberOfItems: number;
+            subTotal: number;
+            tax: number;
+            total: number;
+        }
     }
+    | { type: '[Cart] - LoadAddress from Cookies', payload: ShippingAddress }
 
 
 
@@ -102,7 +103,13 @@ export const cartReducer = (state: CartState, action: CartActionType): CartState
             }
 
 
+        case '[Cart] - Update Address':
+        case '[Cart] - LoadAddress from Cookies':
+            return {
+                ...state,
 
+               shippingAddress: action.payload
+            }
 
 
 
