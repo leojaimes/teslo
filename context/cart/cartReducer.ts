@@ -28,6 +28,7 @@ export const cartReducer = (state: CartState, action: CartActionType): CartState
             //console.log('action.payload '+ action.payload)
             return {
                 ...state,
+                isLoaded: true,
                 cart: [...action.payload]
             }
 

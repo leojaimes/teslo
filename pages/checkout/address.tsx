@@ -168,4 +168,42 @@ const AddressPage = () => {
     )
 }
 
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+import { jwt } from '../../utils';
+import { GetServerSideProps } from 'next'
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+
+   const { token = '' } = req.cookies;
+   let isValidToken = false;
+
+   try {
+      await jwt.isValidToken(token);
+      isValidToken = true;
+   } catch (error) {
+      isValidToken = false;
+   }
+
+   console.log('isValidToken ' + isValidToken)
+   //si no es tocken valido se devuelve a hacer que el usuario se loguee
+   if (!isValidToken) {
+      return {
+         redirect: {
+            destination: '/auth/login?p=/checkout/address',
+            permanent: false,
+         }
+      }
+   }
+
+   return {
+      props: {
+
+      }
+   }
+}
+
+
 export default AddressPage

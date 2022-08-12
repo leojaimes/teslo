@@ -23,18 +23,18 @@ type FormData = {
 
 const LoginPage = () => {
     const router = useRouter();
-    const { loginUser } = useContext( AuthContext );
+    const { loginUser } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const [ showError, setShowError ] = useState(false);
+    const [showError, setShowError] = useState(false);
 
-    const onLoginUser = async( { email, password }: FormData ) => {
+    const onLoginUser = async ({ email, password }: FormData) => {
 
         setShowError(false);
 
-        const isValidLogin = await loginUser( email, password );
+        const isValidLogin = await loginUser(email, password);
 
-        if ( !isValidLogin ) {
+        if (!isValidLogin) {
             setShowError(true);
             setTimeout(() => setShowError(false), 3000);
             return;
@@ -136,7 +136,9 @@ const LoginPage = () => {
                             display='flex'
                             justifyContent='end'
                         >
-                            <NextLink href={`/auth/register`} passHref>
+                            <NextLink href={router.query.p ? `/auth/register?p=${router.query.p}` : '/auth/register'}
+
+                                passHref>
                                 <Link underline='always'> Dont you have an account? </Link>
                                 {/** <Chip label='Sign Up' sx={{ width: '100%', height: 40 }} /> */}
                             </NextLink>
