@@ -28,6 +28,12 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE)
 
+
+    /**
+     * 
+     * 
+     * 
+     */
     useEffect(() => {
         checkToken();
     }, [])
