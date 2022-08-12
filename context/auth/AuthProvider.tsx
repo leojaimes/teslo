@@ -4,6 +4,7 @@ import { tesloApi } from '../../api';
 import { IUser } from '../../interfaces';
 import { AuthContext, AuthReducer } from './'
 import axios, { AxiosError } from 'axios';
+import { useRouter } from 'next/router';
 
 
 export interface AuthState {
@@ -27,7 +28,7 @@ interface Props {
 export const AuthProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE)
-
+    const router = useRouter();
 
     /**
      * 
@@ -35,6 +36,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
      * 
      */
     useEffect(() => {
+
+
+
         checkToken();
     }, [])
 
@@ -46,7 +50,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
      * 
      */
     const checkToken = async () => {
-
+        if (!Cookies.get('token')) {
+            return;
+        }
         try {
             const { data } = await tesloApi.get('/user/validate-token');
             const { token, user } = data;
@@ -113,12 +119,18 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
 
 
+    const logout = () => {
+        Cookies.remove('token');
+        Cookies.remove('cart');
+        router.reload();
+    }
 
     return (
         <AuthContext.Provider value={{
             ...state,
             loginUser,
-            registerUser
+            registerUser,
+            logout
 
         }}>
             {children}
