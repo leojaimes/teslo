@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
     const token = request.cookies.get('token')
 
+    console.log(token)
     if (!token) {
         return NextResponse.redirect(loginUrl)
     }
