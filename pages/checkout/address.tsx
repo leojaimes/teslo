@@ -1,7 +1,10 @@
 import { SpaceBar } from '@mui/icons-material';
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React from 'react'
+import { consumers } from 'stream';
 import { ShopLayout } from '../../components/layouts/';
+
+import { countries } from '../../utils'
 
 const AddressPage = () => {
     return (
@@ -123,11 +126,18 @@ const AddressPage = () => {
                         <InputLabel>Pais</InputLabel>
                         <Select
                             variant='filled'
-                            value={1}
+                            value={'MEX'}
                         >
-                            <MenuItem value={1}>Colombia</MenuItem>
-                            <MenuItem value={2}>Mexique</MenuItem>
-                            <MenuItem value={3}>Canada</MenuItem>
+
+                            {
+                                countries.map((country) => (
+                                    <MenuItem
+                                        key={country.code}
+                                        value={country.code}>{country.name}</MenuItem>
+
+                                ))
+                            }
+
                         </Select>
 
                     </FormControl>
