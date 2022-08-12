@@ -28,7 +28,33 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE)
 
+    useEffect(() => {
+        checkToken();
+    }, [])
 
+
+
+    /**
+     * 
+     * 
+     * 
+     */
+    const checkToken = async () => {
+
+        try {
+            const { data } = await tesloApi.get('/user/validate-token');
+            const { token, user } = data;
+            Cookies.set('token', token);
+            dispatch({ type: '[Auth] - Login', payload: user });
+        } catch (error) {
+            Cookies.remove('token');
+        }
+    }
+
+    /**
+     * 
+     * 
+     */
     const loginUser = async (email: string, password: string): Promise<boolean> => {
 
         try {
@@ -44,26 +70,14 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
     }
 
+    /**
+     * 
+     * @param name 
+     * @param email 
+     * @param password 
+     * @returns 
+     */
     const registerUser = async (name: string, email: string, password: string): Promise<{ hasError: boolean; message?: string }> => {
-
-
-
-        useEffect(() => {
-            checkToken();
-        }, [])
-
-        
-        const checkToken = async () => {
-
-            try {
-                const { data } = await tesloApi.get('/user/validate-token');
-                const { token, user } = data;
-                Cookies.set('token', token);
-                dispatch({ type: '[Auth] - Login', payload: user });
-            } catch (error) {
-                Cookies.remove('token');
-            }
-        }
 
         try {
             const { data } = await tesloApi.post('/user/register', { name, email, password });

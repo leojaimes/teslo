@@ -6,8 +6,10 @@ import { AuthLayout } from '../../components/layouts/';
 import { useForm } from 'react-hook-form';
 import { validations } from '../../utils';
 import { tesloApi } from '../../api';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { ErrorOutline } from '@mui/icons-material';
+import { useRouter } from 'next/router';
+import { AuthContext } from '../../context/auth';
 
 
 type FormData = {
@@ -20,32 +22,32 @@ type FormData = {
 
 const RegisterPage = () => {
 
+    const router = useRouter();
+    const { registerUser } = useContext( AuthContext );
+
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const [ showError, setShowError ] = useState(false);
+    const [ errorMessage, setErrorMessage ] = useState('');
 
+    const onRegisterForm = async( {  name, email, password }: FormData ) => {
+        
+        setShowError(false);
+        const { hasError, message } = await registerUser(name, email, password);
 
-    const [showError, setShowError] = useState(false)
-
-    const onRegister = async ({ email, password, name }: FormData) => {
-        setShowError(false)
-        try {
-            const { data } = await tesloApi.post(`/user/register`, { name, email, password })
-            const { token, user } = data
-            console.log(data)
-        } catch (error) {
-            console.log(error)
-            setShowError(true)
-
-            setTimeout(() => {
-                setShowError(false)
-
-            }, 3000)
+        if ( hasError ) {
+            setShowError(true);
+            setErrorMessage( message! );
+            setTimeout(() => setShowError(false), 3000);
+            return;
         }
-
-
+        
+        // Todo: navegar a la pantalla que el usuario estaba
+        router.replace('/');
 
     }
     return (
-        <form onSubmit={handleSubmit(onRegister)} noValidate>
+        <form onSubmit={handleSubmit(onRegisterForm)} noValidate>
             <AuthLayout title={'Register - Teslo'}  >
                 <Box sx={{ width: 350, paddin: '10px 20px', }}>
                     <Grid
