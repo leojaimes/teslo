@@ -1,11 +1,13 @@
 
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { ShopLayout } from '../../components/layouts/';
 
 import { countries } from '../../utils'
+import { useRouter } from 'next/router';
+import { CartContext } from '../../context';
 
 
 
@@ -37,13 +39,17 @@ const getAddressFromCookies = (): FormData => {
 
 const AddressPage = () => {
 
+    const router = useRouter();
+    const { updateAddress} = useContext( CartContext );
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: getAddressFromCookies()
     });
 
 
     const onSubmitAddress = (data: FormData) => {
-
+        updateAddress( data );
+        router.push('/checkout/summary');
     }
 
 

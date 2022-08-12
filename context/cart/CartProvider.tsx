@@ -6,11 +6,24 @@ import Cookie from 'js-cookie'
 export interface CartState {
     isLoaded: boolean;
     cart: ICartProduct[]
-    numberOfItems:number
+    numberOfItems: number
     subTotal: number
     tax: number
-    total:  number
+    total: number
 }
+
+
+export interface ShippingAddress {
+    firstName: string;
+    lastName: string;
+    address: string;
+    address2?: string;
+    zip: string;
+    city: string;
+    country: string;
+    phone: string;
+}
+
 
 
 const CART_INITIAL_STATE: CartState = {
@@ -62,51 +75,58 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
         const cookieProducts = Cookie.get('cart') ? JSON.parse(Cookie.get('cart')!) : []
         console.log('cookies')
-        console.log( cookieProducts)
+        console.log(cookieProducts)
 
     }, [state.cart]);
 
 
     useEffect(() => {
-        
-        const numberOfItems = state.cart.reduce( ( prev, current ) => current.quantity + prev , 0 );
-        const subTotal = state.cart.reduce( ( prev, current ) => (current.price * current.quantity) + prev, 0 );
-        const taxRate =  Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
-    
+
+        const numberOfItems = state.cart.reduce((prev, current) => current.quantity + prev, 0);
+        const subTotal = state.cart.reduce((prev, current) => (current.price * current.quantity) + prev, 0);
+        const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
+
         const orderSummary = {
             numberOfItems,
             subTotal,
             tax: subTotal * taxRate,
-            total: subTotal * ( taxRate + 1 )
+            total: subTotal * (taxRate + 1)
         }
 
         dispatch({ type: '[Cart] - Update order summary', payload: orderSummary });
     }, [state.cart]);
-    
+
 
 
 
     const addProductToCart = (product: ICartProduct) => {
         dispatch({ type: '[Cart] - Update products in cart', payload: product })
-        /*setTimeout(() => {
-            Cookie.set('cart', JSON.stringify(state.cart));
-        }, 100)*/
+
 
     }
     const removeCartProduct = (product: ICartProduct) => {
         dispatch({ type: '[Cart] - Remove product in cart', payload: product });
-        /*setTimeout(() => {
-            Cookie.set('cart', JSON.stringify(state.cart));
-        }, 100)*/
+
     }
 
     const updateCartProduct = (product: ICartProduct) => {
         dispatch({ type: '[Cart] - Update Product In Cart', payload: product });
-        /*setTimeout(() => {
-            Cookie.set('cart', JSON.stringify(state.cart));
-        }, 100)*/
+
     }
 
+
+    const updateAddress = (address: ShippingAddress) => {
+        Cookie.set('firstName', address.firstName);
+        Cookie.set('lastName', address.lastName);
+        Cookie.set('address', address.address);
+        Cookie.set('address2', address.address2 || '');
+        Cookie.set('zip', address.zip);
+        Cookie.set('city', address.city);
+        Cookie.set('country', address.country);
+        Cookie.set('phone', address.phone);
+
+        dispatch({ type: '[Cart] - Update Address', payload: address });
+    }
 
 
 
@@ -117,7 +137,8 @@ export const CartProvider: FC<Props> = ({ children }) => {
 
             addProductToCart,
             removeCartProduct,
-            updateCartProduct
+            updateCartProduct,
+            updateAddress
         }}>
             {children}
         </CartContext.Provider>

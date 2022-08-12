@@ -1,5 +1,5 @@
 import { ICartProduct } from '../../interfaces';
-import { CartState } from './';
+import { CartState, ShippingAddress } from './';
 
 
 
@@ -8,14 +8,15 @@ type CartActionType =
     | { type: '[Cart] - LoadCart from cookies | storage', payload: ICartProduct[] }
     | { type: '[Cart] - Remove product in cart', payload: ICartProduct }
     | { type: '[Cart] - Update Product In Cart', payload: ICartProduct }
-    | {
-        type: '[Cart] - Update order summary',
-        payload: {
-            numberOfItems: number;
-            subTotal: number;
-            tax: number;
-            total: number;
-        }
+    | { type: '[Cart] - Update Address', payload: ShippingAddress }
+    | { 
+       type: '[Cart] - Update order summary', 
+       payload: {
+          numberOfItems: number;
+          subTotal: number;
+          tax: number;
+          total: number;
+       }
     }
 
 
