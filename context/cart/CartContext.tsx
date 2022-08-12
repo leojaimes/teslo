@@ -10,7 +10,7 @@ export interface CartContextProps {
     subTotal: number;
     tax: number;
     total: number;
-
+    shippingAddress?: ShippingAddress,
     
     addProductToCart: (product: ICartProduct ) => void
     removeCartProduct: (product: ICartProduct) => void
