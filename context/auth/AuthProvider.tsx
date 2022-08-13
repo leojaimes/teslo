@@ -5,6 +5,7 @@ import { IUser } from '../../interfaces';
 import { AuthContext, AuthReducer } from './'
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
+import { useSession, signOut } from 'next-auth/react';
 
 
 export interface AuthState {
@@ -28,6 +29,8 @@ interface Props {
 export const AuthProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE)
+    const { data, status } = useSession();
+
     const router = useRouter();
 
     /**
@@ -35,12 +38,31 @@ export const AuthProvider: FC<Props> = ({ children }) => {
      * 
      * 
      */
+    // useEffect(() => {
+
+
+
+    //     checkToken();
+    // }, [])
     useEffect(() => {
 
+        if(status === 'authenticated'){
+
+            console.log(   {
+                user: data?.user 
+
+            } )
+            //TODO: dispatch( { type: '[Auth] - Login', payload: data.user as IUser})
+        } 
 
 
-        checkToken();
-    }, [])
+       
+    
+      return () => {
+         
+      }
+    }, [ status, data ])
+    
 
 
 
@@ -133,8 +155,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
         Cookies.remove('phone');
 
         
-        Cookies.remove('token');
-        Cookies.remove('cart');
+        signOut()
         router.reload();
     }
 

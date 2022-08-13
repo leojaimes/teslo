@@ -1,5 +1,6 @@
-import { Card, CardActionArea, CardActions, CardMedia, Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import type { NextPage } from 'next'
+
 import { ShopLayout } from '../components/layouts/ShopLayout';
 import { ProductList } from '../components/products';
 import { FullScreenLoading } from '../components/ui';
