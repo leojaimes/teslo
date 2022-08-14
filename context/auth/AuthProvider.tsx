@@ -52,7 +52,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
                 user: data?.user 
 
             } )
-            //TODO: dispatch( { type: '[Auth] - Login', payload: data.user as IUser})
+          dispatch( { type: '[Auth] - Login', payload: data.user as IUser})
         } 
 
 

@@ -1,6 +1,8 @@
 
 import { useContext, useState } from 'react';
 import NextLink from 'next/link'
+
+import  { signIn } from  'next-auth/react'
 import { Box, Button, Grid, TextField, Typography, Link, Chip } from '@mui/material';
 
 import { AuthLayout } from '../../components/layouts/';
@@ -32,20 +34,22 @@ const LoginPage = () => {
 
         setShowError(false);
 
-        const isValidLogin = await loginUser(email, password);
+        // const isValidLogin = await loginUser(email, password);
 
-        if (!isValidLogin) {
-            setShowError(true);
-            setTimeout(() => setShowError(false), 3000);
-            return;
-        }
+        // if (!isValidLogin) {
+        //     setShowError(true);
+        //     setTimeout(() => setShowError(false), 3000);
+        //     return;
+        // }
 
 
 
-        // Todo: navegar a la pantalla que el usuario estaba
-        const destination = router.query.p?.toString() || '/';
-        router.replace(destination);
+        // // Todo: navegar a la pantalla que el usuario estaba
+        // const destination = router.query.p?.toString() || '/';
+        // router.replace(destination);
 
+
+        await signIn( 'credentials', { email, password})
     }
 
     return (
