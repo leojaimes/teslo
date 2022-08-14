@@ -1,5 +1,8 @@
 import React, { useContext, useEffect } from 'react'
- 
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+
+
 
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 
@@ -10,6 +13,7 @@ import { ShopLayout } from '../../components/layouts/';
 import { countries } from '../../utils'
 import { useRouter } from 'next/router';
 import { CartContext } from '../../context';
+
 
 
 
@@ -314,7 +318,7 @@ const AddressPage = () => {
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
 /*import { jwt } from '../../utils';
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps } from 'next';
 import { useEffect } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
@@ -346,6 +350,30 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       }
    }
 }*/
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req });
+    console.log(`'session: \n`)
+    console.log({ session });
+
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false
+            }
+        }
+    }
+
+
+    return {
+        props: {}
+    }
+}
 
 
 export default AddressPage

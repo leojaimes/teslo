@@ -1,6 +1,12 @@
 import { useContext, useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
+
+
+
+
 import Cookies from 'js-cookie';
 
 import { Link, Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
@@ -88,5 +94,28 @@ const SummaryPage = () => {
     </ShopLayout>
   )
 }
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req });
+    console.log(`'session: \n`)
+    console.log({ session });
+
+
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/auth/login',
+                permanent: false
+            }
+        }
+    }
+
+
+    return {
+        props: {}
+    }
+}
+
 
 export default SummaryPage;
