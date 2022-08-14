@@ -1,6 +1,8 @@
+import React, { useContext, useEffect } from 'react'
+ 
 
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
-import React, { useContext } from 'react'
+
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { ShopLayout } from '../../components/layouts/';
@@ -42,9 +44,23 @@ const AddressPage = () => {
     const router = useRouter();
     const { updateAddress} = useContext( CartContext );
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-        defaultValues: getAddressFromCookies()
-    });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>({
+        defaultValues: {
+             firstName: '',
+             lastName: '',
+             address: '',
+             address2: '',
+             zip: '',
+             city: '',
+             country: countries[0].code,
+             phone: '',
+        } 
+     });
+ 
+     useEffect(() => {
+         reset(getAddressFromCookies() );
+ 
+     }, [reset])
 
 
     const onSubmitAddress = (data: FormData) => {
@@ -299,6 +315,7 @@ const AddressPage = () => {
 
 /*import { jwt } from '../../utils';
 import { GetServerSideProps } from 'next'
+import { useEffect } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
