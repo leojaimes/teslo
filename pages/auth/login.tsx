@@ -1,9 +1,9 @@
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import NextLink from 'next/link'
 
-import  { signIn } from  'next-auth/react'
-import { Box, Button, Grid, TextField, Typography, Link, Chip } from '@mui/material';
+import { getSession, signIn, getProviders } from 'next-auth/react'
+import { Box, Button, Grid, TextField, Typography, Link, Chip, Divider } from '@mui/material';
 
 import { AuthLayout } from '../../components/layouts/';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ import { validations } from '../../utils';
 import { ErrorOutline } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/auth';
+import { GetServerSideProps } from 'next';
 
 
 
@@ -28,7 +29,25 @@ const LoginPage = () => {
     const { loginUser } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    
     const [showError, setShowError] = useState(false);
+
+
+
+
+    const [providers, setProviders] = useState<any>({});
+
+    useEffect(() => {
+      getProviders().then( prov => {
+        // console.log({prov});
+        setProviders(prov)
+      })
+    }, [])
+    
+
+
+
+
 
     const onLoginUser = async ({ email, password }: FormData) => {
 
@@ -49,7 +68,7 @@ const LoginPage = () => {
         // router.replace(destination);
 
 
-        await signIn( 'credentials', { email, password})
+        await signIn('credentials', { email, password })
     }
 
     return (
@@ -149,6 +168,32 @@ const LoginPage = () => {
                         </Grid>
 
 
+                        <Grid item xs={12} display='flex' flexDirection='column' justifyContent='end'>
+                            <Divider sx={{ width: '100%', mb: 2 }} />
+                            {
+                                Object.values( providers ).map(( provider: any ) => {
+                                    
+                                    if ( provider.id === 'credentials' ) return (<div key="credentials"></div>);
+
+                                    return (
+                                        <Button
+                                            key={ provider.id }
+                                            variant="outlined"
+                                            fullWidth
+                                            color="primary"
+                                            sx={{ mb: 1 }}
+                                            onClick={ () => signIn( provider.id ) }
+                                        >
+                                            { provider.name }
+                                        </Button>
+                                    )
+
+                                })
+                            }
+
+                        </Grid>
+
+
 
                     </Grid>
                 </Box>
@@ -157,5 +202,32 @@ const LoginPage = () => {
         </AuthLayout>
     )
 }
+
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req });
+    console.log(`'session: \n`)
+    console.log({ session });
+
+    const { p = '/' } = query;
+
+    if (session) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+
+
+    return {
+        props: {}
+    }
+}
+
+
 
 export default LoginPage
