@@ -15,7 +15,7 @@ import { dbProducts, } from '../../database';
 
 import { GetStaticProps } from 'next'
 import { GetStaticPaths } from 'next'
-import { ISize } from '../../interfaces/product';
+import { ISize } from '../../interfaces/products';
 import { fontSize } from '@mui/system';
 import { CartContext } from '../../context/cart/CartContext';
 

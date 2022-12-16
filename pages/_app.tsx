@@ -10,6 +10,8 @@ import { AuthProvider } from '../context/auth';
 import { SessionProvider } from "next-auth/react"
 
 
+
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
