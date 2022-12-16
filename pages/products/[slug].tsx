@@ -23,6 +23,8 @@ import { CartContext } from '../../context/cart/CartContext';
 //const product = initialData.products[0]
 
 
+
+
 interface Props {
     product: IProduct
 
